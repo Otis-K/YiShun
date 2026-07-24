@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f22a8">
+  <title>文档批量处理工具</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="iconSprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-app" viewBox="0 0 24 24">
+      <path d="M4 4h16v16H4z"></path>
+      <path d="M8 8h3v3H8zM13 8h3v3h-3zM8 13h8v3H8z"></path>
+    </symbol>
+    <symbol id="icon-help" viewBox="0 0 24 24">
+      <path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm0 13.5a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3zm0-9.2c-2.1 0-3.7 1.28-3.84 3.2h2.13c.08-.78.73-1.3 1.66-1.3.88 0 1.49.43 1.49 1.15 0 .58-.29.95-1.19 1.48-1.31.78-1.91 1.55-1.83 3.12l.01.19h2.03c0-.92.27-1.33 1.24-1.92 1.18-.72 1.91-1.52 1.91-2.98 0-1.85-1.53-2.94-3.61-2.94z"></path>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+      <path d="M19.4 13.5a7.7 7.7 0 0 0 .05-1.5 7.7 7.7 0 0 0-.05-1.5l2.05-1.6-2-3.45-2.42.98a7.17 7.17 0 0 0-2.58-1.5L14.1 2h-4.2l-.36 2.93a7.17 7.17 0 0 0-2.58 1.5l-2.42-.98-2 3.45 2.05 1.6a7.7 7.7 0 0 0-.05 1.5 7.7 7.7 0 0 0 .05 1.5L2.54 15.1l2 3.45 2.42-.98a7.17 7.17 0 0 0 2.58 1.5L9.9 22h4.2l.35-2.93a7.17 7.17 0 0 0 2.58-1.5l2.42.98 2-3.45-2.05-1.6zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"></path>
+    </symbol>
+    <symbol id="icon-update" viewBox="0 0 24 24">
+      <path d="M12 4a8 8 0 0 1 7.3 4.8H16v2.2h6V5.1h-2.2v2.03A10 10 0 1 0 22 12h-2.1A7.9 7.9 0 1 1 12 4z"></path>
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24">
+      <path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3zM4 19h16v2H4v-2z"></path>
+    </symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24">
+      <path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z"></path>
+    </symbol>
+    <symbol id="icon-doc" viewBox="0 0 24 24">
+      <path d="M7 3.5h7l4 4V20H7z"></path>
+      <path d="M14 3.5v4h4M9 12h6M9 16h6"></path>
+    </symbol>
+    <symbol id="icon-word" viewBox="0 0 24 24">
+      <path d="M5 5h14v14H5z"></path>
+      <path d="M8 9.5l1.3 5 1.5-5 1.4 5 1.3-5"></path>
+    </symbol>
+    <symbol id="icon-excel" viewBox="0 0 24 24">
+      <path d="M5 5h14v14H5z"></path>
+      <path d="M8.5 9.5l4 5M12.5 9.5l-4 5M14.5 9.5H17.5M14.5 14.5H17.5"></path>
+    </symbol>
+    <symbol id="icon-pdf" viewBox="0 0 24 24">
+      <path d="M7 3.5h7l4 4V20H7z"></path>
+      <path d="M14 3.5v4h4M9 15v-4h2a1.5 1.5 0 0 1 0 3H9M13.5 15v-4h1.4a2 2 0 0 1 0 4h-1.4M17 11h2.5M17 13h2"></path>
+    </symbol>
+    <symbol id="icon-text" viewBox="0 0 24 24">
+      <path d="M6 4.5h12v15H6z"></path>
+      <path d="M9 9h6M9 12.5h6M9 16h4"></path>
+    </symbol>
+    <symbol id="icon-image" viewBox="0 0 24 24">
+      <path d="M4.5 6h15v12h-15z"></path>
+      <path d="M8 10.5a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8z"></path>
+      <path d="M6.5 16l3.3-3.3 2.4 2.3 2.2-2.3 3.1 3.3"></path>
+    </symbol>
+    <symbol id="icon-folder" viewBox="0 0 24 24">
+      <path d="M3.5 7.5h5l2 2H20v8.5H3.5z"></path>
+    </symbol>
+    <symbol id="icon-organize" viewBox="0 0 24 24">
+      <path d="M4.5 6h15v4h-15z"></path>
+      <path d="M4.5 12.5h6v5h-6zM13.5 12.5h6v5h-6z"></path>
+    </symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24">
+      <path d="M8 5l8 7-8 7z"></path>
+    </symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24">
+      <path d="M15 5l-7 7 7 7M8 12h11"></path>
+    </symbol>
+    <symbol id="icon-canvas" viewBox="0 0 24 24">
+      <path d="M4 5.5h16v11H4z"></path>
+      <path d="M8 19h8M12 16.5V19M8 9h3M13 9h3M8 12.5h8"></path>
+    </symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="titleZone">
+      <div class="appBadge">
+        <svg><use href="#icon-app"></use></svg>
+      </div>
+      <div class="brandText">
+        <strong>文档批量处理工具</strong>
+        <small>v0.5.30 · 本地桌面版</small>
+      </div>
+    </div>
+
+    <div class="titleMeta">
+      <div class="metaBlock">
+        <span class="metaLabel">运行模式</span>
+        <strong>本地离线</strong>
+      </div>
+      <div class="metaBlock">
+        <span class="metaLabel">能力状态</span>
+        <strong id="capabilityStatus">正在读取验收状态</strong>
+      </div>
+      <div class="metaBlock">
+        <span class="metaLabel">工具数量</span>
+        <strong id="heroCount">0 项</strong>
+      </div>
+    </div>
+
+    <div class="topbarActions">
+      <button id="helpBtn" class="iconBtn" type="button" aria-label="帮助中心">
+        <svg><use href="#icon-help"></use></svg>
+        <span>帮助</span>
+      </button>
+      <button id="settingsBtn" class="iconBtn" type="button" aria-label="设置">
+        <svg><use href="#icon-settings"></use></svg>
+        <span>设置</span>
+      </button>
+      <button id="updateBtn" class="topbarBtn" type="button">
+        <svg><use href="#icon-update"></use></svg>
+        <span>检查更新</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar">
+      <div class="sidebarHeader">
+        <span>功能导航</span>
+        <small>按领域分组</small>
+      </div>
+      <nav id="sidebar" class="sidebarNav"></nav>
+    </aside>
+
+    <section class="mainPanel">
+      <section id="catalogView" class="catalogView">
+        <section class="toolbar">
+          <div class="toolbarRow">
+            <select id="jumpSelect" aria-label="快速跳转到功能"></select>
+            <input id="searchInput" placeholder="搜索功能名称、说明或内部标识">
+            <button id="clearBtn" class="actionBtn" type="button">搜索功能</button>
+          </div>
+          <div class="summaryRow">
+            <div class="summaryTitle">
+              <strong id="categoryTitle">全部工具</strong>
+              <span id="countText">共 0 项功能</span>
+            </div>
+            <div class="summaryMeta">
+              <span>固定 12 项 / 页</span>
+              <span>右侧无滚动，仅分页浏览</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="cards" class="cards"></section>
+
+        <footer class="panelFooter">
+          <div class="statusBar">
+            <span class="statusLabel">状态</span>
+            <span id="status">就绪</span>
+            <button id="openResultBtn" class="resultLink" type="button" hidden>打开保存位置</button>
+          </div>
+          <div class="pager" id="pager">
+            <button id="prevPageBtn" class="pageBtn" type="button">上一页</button>
+            <span id="pageInfo">第 1 / 1 页</span>
+            <button id="nextPageBtn" class="pageBtn" type="button">下一页</button>
+          </div>
+        </footer>
+      </section>
+
+      <section id="toolView" class="immersiveView toolView workbenchView" hidden>
+        <header class="workbenchHeader">
+          <button id="toolBackBtn" class="blueBackButton" type="button" aria-label="返回主面板">
+            <svg><use href="#icon-back"></use></svg>
+            <span>返回到主面板</span>
+          </button>
+          <div class="workbenchTitle">
+            <h1 id="dialogTitle"></h1>
+            <small id="toolViewKey"></small>
+          </div>
+          <div class="workbenchTopActions">
+            <button id="pickFilesTop" class="blueAction" type="button">+ 添加文件</button>
+            <button id="pickFoldersTop" class="blueAction" type="button">从文件夹中导入文件</button>
+            <button id="clearInputsBtn" type="button">清空</button>
+          </div>
+        </header>
+
+        <section class="workbenchStepper" aria-label="功能处理步骤">
+          <button class="wizardStep active" data-step="input" type="button"><span>1</span>选择需要处理的记录</button>
+          <button class="wizardStep" data-step="options" type="button"><span>2</span>功能参数</button>
+          <button class="wizardStep" data-step="output" type="button"><span>3</span>设置保存位置</button>
+          <button class="wizardStep" data-step="result" type="button"><span>4</span>开始处理</button>
+        </section>
+
+        <section class="toolFormWorkspace wizardWorkspace">
+          <section id="workbenchInputStep" class="wizardPane active" data-step="input">
+            <div class="inputCommandRow" id="inputFileField">
+              <button id="pickFiles" class="blueAction" type="button">添加文件</button>
+              <button id="pickFoldersInline" type="button">选择文件夹</button>
+              <span id="pickedFiles">未选择</span>
+            </div>
+            <section id="categoryWorkspace" class="categoryWorkspace inputTableWorkspace" aria-live="polite"></section>
+          </section>
+
+          <section id="workbenchOptionsStep" class="wizardPane" data-step="options">
+            <div class="wizardSectionTitle">
+              <h2>功能参数</h2>
+              <p id="dialogDesc"></p>
+            </div>
+            <div class="parameterGrid">
+              <div id="paramBox"></div>
+              <p id="noParamsHint" class="emptyParams">此功能无需额外参数。</p>
+            </div>
+          </section>
+
+          <section id="workbenchOutputStep" class="wizardPane" data-step="output">
+            <div class="wizardSectionTitle">
+              <h2>设置保存位置</h2>
+              <p>不同工具会显示不同的输出参数，原文件默认保持只读。</p>
+            </div>
+            <div class="outputSettingsGrid">
+              <div class="outputSettingBlock">
+                <h3>保存到</h3>
+                <label><input name="outputMode" type="radio" value="new" checked> 新位置</label>
+                <label><input name="outputMode" type="radio" value="overwrite"> 删除并覆盖原路径</label>
+                <label><input name="outputMode" type="radio" value="same"> 与原路径相同的位置</label>
+              </div>
+              <div class="outputSettingBlock">
+                <h3>位置</h3>
+                <div class="selectionControl">
+                  <span id="pickedOutput">未选择时使用默认输出目录</span>
+                  <button id="pickOutput" class="blueAction" type="button">浏览</button>
+                </div>
+              </div>
+              <div class="outputSettingBlock">
+                <h3>目录层级</h3>
+                <label><input name="directoryMode" type="radio" value="flat" checked> 平铺到新位置</label>
+                <label><input name="directoryMode" type="radio" value="keep"> 保留原目录层级结构</label>
+              </div>
+              <div class="outputSettingBlock">
+                <h3>处理完成后通知</h3>
+                <label><input name="notifyMode" type="radio" value="silent" checked> 不显示通知</label>
+                <label><input name="notifyMode" type="radio" value="sound"> 显示通知并播放音乐</label>
+                <label><input name="notifyMode" type="radio" value="toast"> 显示通知但不播放音乐</label>
+              </div>
+              <div id="outputProfilePanel" class="outputSettingBlock outputProfilePanel"></div>
+            </div>
+          </section>
+
+          <section id="workbenchResultStep" class="wizardPane" data-step="result">
+            <div class="wizardSectionTitle">
+              <h2>执行与结果</h2>
+              <p id="previewSummary">选择真实文件后显示输入摘要与风险。</p>
+            </div>
+            <div class="resultGrid">
+              <div class="previewSection">
+                <div class="sectionHeading">
+                  <div>
+                    <h2>执行前预览</h2>
+                    <p>预检通过后才会提交后端任务。</p>
+                  </div>
+                  <span id="validationBadge" class="validationBadge">等待输入</span>
+                </div>
+                <div id="riskNotice" class="riskNotice" hidden></div>
+                <div id="inputPreview" class="inputPreview" role="list"></div>
+              </div>
+              <div id="taskProgressPanel" class="taskProgressPanel" hidden>
+                <div class="sectionHeading">
+                  <div>
+                    <h2 id="taskPhase">任务准备中</h2>
+                    <p id="taskTiming">已用 00:00 · 等待后端状态</p>
+                  </div>
+                  <span id="taskStateBadge" class="validationBadge">排队中</span>
+                </div>
+                <div class="progressTrack" aria-label="任务进度"><span id="progressFill"></span></div>
+                <p id="taskCurrentFile" class="taskCurrentFile"></p>
+                <div id="taskResults" class="taskResults"></div>
+              </div>
+            </div>
+          </section>
+        </section>
+        <footer class="immersiveFooter">
+          <div class="immersiveRunState">
+            <strong id="toolRunStatus">等待执行</strong>
+            <span>原文件不会被覆盖，结果写入输出目录。</span>
+          </div>
+          <div class="immersiveActions">
+            <button id="toolCancelBtn" type="button">返回列表</button>
+            <button id="wizardPrevBtn" type="button">上一步</button>
+            <button id="taskCancelBtn" class="dangerAction" type="button" hidden>取消任务</button>
+            <button id="toolOpenResultBtn" type="button" hidden>打开保存位置</button>
+            <button id="saveAsWorkflowBtn" type="button">保存为任务流</button>
+            <button id="runBtn" class="primaryAction" type="button">下一步</button>
+          </div>
+        </footer>
+      </section>
+
+      <section id="workflowView" class="immersiveView workflowView" hidden>
+        <header class="workbenchHeader">
+          <button id="workflowBackBtn" class="blueBackButton" type="button" aria-label="返回主面板">
+            <svg><use href="#icon-back"></use></svg>
+            <span>返回到主面板</span>
+          </button>
+          <div class="workbenchTitle">
+            <h1>任务流</h1>
+            <small>多工具顺序执行</small>
+          </div>
+          <div class="workbenchTopActions">
+            <input id="workflowSearch" class="workflowSearch" placeholder="搜索任务名称">
+            <button id="workflowAddBtn" class="blueAction" type="button">+ 添加任务</button>
+            <button id="workflowDeleteAllBtn" class="dangerAction strongDanger" type="button">删除所有任务</button>
+          </div>
+        </header>
+        <section class="workflowWorkspace">
+          <div class="workflowTableWrap">
+            <table class="workflowTable">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>任务名称</th>
+                  <th>修改时间</th>
+                  <th>状态摘要</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="workflowRows"></tbody>
+            </table>
+          </div>
+          <section id="workflowDetail" class="workflowDetail" hidden>
+            <header class="workflowDetailHeader">
+              <div>
+                <strong id="workflowDetailTitle">步骤设置</strong>
+                <span id="workflowIssues">等待校验</span>
+              </div>
+              <div>
+                <button id="workflowAddStepBtn" class="blueAction" type="button">+ 添加步骤</button>
+                <button id="workflowRunBtn" class="blueAction" type="button">运行</button>
+                <button id="workflowCancelRunBtn" class="dangerAction" type="button" hidden>取消</button>
+              </div>
+            </header>
+            <div class="workflowRunSetup">
+              <button id="workflowPickInputsBtn" type="button">选择本次输入</button>
+              <span id="workflowPickedInputs">未选择</span>
+              <button id="workflowPickOutputBtn" type="button">选择最终输出目录</button>
+              <span id="workflowPickedOutput">未选择</span>
+            </div>
+            <div id="workflowStepRows" class="workflowStepRows"></div>
+            <div id="workflowRunPanel" class="workflowRunPanel" hidden></div>
+          </section>
+        </section>
+      </section>
+
+      <section id="canvasView" class="canvasView" aria-label="智能画布同窗口视图" hidden>
+        <header class="canvasEmbeddedHeader">
+          <button id="canvasBackBtn" class="canvasBackButton" type="button" aria-label="返回进入画布前的页面">
+            <svg><use href="#icon-back"></use></svg>
+            <span>返回进入前页面</span>
+          </button>
+          <div class="canvasEmbeddedTitle">
+            <h1>智能画布</h1>
+            <small>FlowCanvas SDK · 纯本地工作流</small>
+          </div>
+          <button id="canvasImmersiveBtn" class="canvasImmersiveButton" type="button" aria-pressed="false" aria-label="隐藏全部工具导航">
+            <span>沉浸式</span>
+          </button>
+          <div class="canvasEmbeddedState" role="status" aria-live="polite">
+            <span></span>
+            <strong>主窗口内运行</strong>
+            <small>画布数据仅保存在此电脑</small>
+          </div>
+        </header>
+        <iframe
+          id="canvasFrame"
+          class="canvasFrame"
+          data-src="canvas.html"
+          title="Tool Plus 本地工作流画布"
+          sandbox="allow-scripts allow-same-origin"
+          referrerpolicy="no-referrer"
+        ></iframe>
+      </section>
+
+      <section id="fileSettingsView" class="immersiveView" hidden>
+        <header class="immersiveHeader">
+          <button id="settingsBackBtn" class="backButton" type="button" aria-label="返回工具列表">
+            <svg><use href="#icon-back"></use></svg>
+          </button>
+          <div class="immersiveIdentity">
+            <small>应用设置</small>
+            <h1>文件工作区</h1>
+            <p>设置默认输入与输出目录。每个功能会自动建立 input 和 output 文件夹。</p>
+          </div>
+        </header>
+        <section class="settingsWorkspace">
+          <div class="settingsGroup">
+            <h2>文件工作区</h2>
+            <label for="workspacePath">工作区路径</label>
+            <div class="selectionControl">
+              <input id="workspacePath" type="text" value="G:\tool-user-file">
+              <button id="pickWorkspace" type="button">选择目录</button>
+            </div>
+            <small id="workspaceHint">默认：G:\tool-user-file</small>
+          </div>
+          <div class="settingsGroup">
+            <h2>应用数据存储</h2>
+            <p class="settingsDescription">画布、模型配置、数据库以及生成的图片和视频统一保存在这里。修改后将在下次启动前迁移数据。</p>
+            <label for="dataRootPath">数据目录</label>
+            <div class="selectionControl">
+              <input id="dataRootPath" type="text" value="G:\tool-plus-data">
+              <button id="pickDataRoot" type="button">选择目录</button>
+            </div>
+            <small id="dataRootHint">默认：G:\tool-plus-data</small>
+          </div>
+          <div class="settingsGroup">
+            <h2>智能画布模型配置管理</h2>
+            <p class="settingsDescription">图片和视频使用独立模型配置与独立加密密钥，互不覆盖。</p>
+            <h3>图片生成</h3>
+            <label for="canvasModelBaseUrl">API 地址</label>
+            <input id="canvasModelBaseUrl" type="url" value="https://api.tmlab.store" spellcheck="false">
+            <label for="canvasImageModel">模型名称</label>
+            <input id="canvasImageModel" type="text" value="nano-banana-pro(特价版 1)" spellcheck="false">
+            <label for="canvasModelApiKey">API Key</label>
+            <input id="canvasModelApiKey" type="password" autocomplete="new-password" placeholder="留空则保留已安全保存的密钥">
+            <small id="canvasModelHint">密钥由 Windows 安全存储加密，不写入项目、画布或安装包。</small>
+            <h3>视频生成</h3>
+            <label for="canvasVideoModelBaseUrl">API 地址</label>
+            <input id="canvasVideoModelBaseUrl" type="url" value="https://api.tmlab.store" spellcheck="false">
+            <label for="canvasVideoModel">模型名称</label>
+              <input id="canvasVideoModel" type="text" value="seedance-2.0-pro(431)" spellcheck="false">
+            <label for="canvasVideoModelApiKey">API Key</label>
+            <input id="canvasVideoModelApiKey" type="password" autocomplete="new-password" placeholder="留空则保留已安全保存的密钥">
+            <small id="canvasVideoModelHint">视频密钥独立保存，不会被图片密钥覆盖。</small>
+          </div>
+        </section>
+        <footer class="immersiveFooter">
+          <div class="immersiveRunState">
+            <strong>文件设置</strong>
+            <span>修改后会初始化全部工具目录。</span>
+          </div>
+          <div class="immersiveActions">
+            <button id="settingsCancelBtn" type="button">返回列表</button>
+            <button id="saveSettingsBtn" class="primaryAction" type="button">保存设置</button>
+          </div>
+        </footer>
+      </section>
+    </section>
+  </main>
+
+  <section class="logDock">
+    <div class="logDockHeader">执行日志</div>
+    <pre id="log"></pre>
+  </section>
+
+  <div id="noticeBar" class="noticeBar" role="status" aria-live="polite" hidden></div>
+  <div id="blockingModal" class="blockingModal" role="dialog" aria-modal="true" aria-labelledby="blockingModalTitle" hidden>
+    <div class="blockingModalCard">
+      <h2 id="blockingModalTitle">需要先完成当前步骤</h2>
+      <p id="blockingModalMessage">请补齐必填内容后继续。</p>
+      <input id="blockingModalInput" type="text" hidden>
+      <div class="blockingModalActions">
+        <button id="blockingModalCancel" type="button" hidden>取消</button>
+        <button id="blockingModalOk" class="primaryAction" type="button">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

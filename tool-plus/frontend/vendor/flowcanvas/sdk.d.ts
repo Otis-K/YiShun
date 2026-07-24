@@ -1,0 +1,82 @@
+import { type AutosaveHandler, type AutosaveStatus } from './autosave.js';
+import type { EdgeInput } from './core/engine.js';
+import { CanvasEngine } from './core/engine.js';
+import type { CanvasNode, CanvasNodeData, CanvasEdge, EngineEventMap, EngineEventName, GraphDocument, NodeDefinition, RuntimeOptions, ValidationResult, WorkflowRunResult } from './core/types.js';
+import { type FlowCanvasPlugin } from './plugins.js';
+import type { FlowCanvasInspectorRenderer, FlowCanvasNodeRenderer, FlowCanvasRenderers } from './react/extensions.js';
+import type { WorkflowRuntime } from './runtime/local-runtime.js';
+import type { GraphMigrationRegistry } from './core/serialization.js';
+import type { FlowCanvasServices } from './services.js';
+export interface FlowCanvasSDKOptions {
+    container?: HTMLElement | string;
+    graph?: GraphDocument;
+    /** Optional instance-local graph migration registry used for construction and imports. */
+    migrations?: GraphMigrationRegistry;
+    nodeTypes?: NodeDefinition[];
+    /** Register deterministic demo-only nodes. Defaults to false; production hosts provide real definitions/runtime. */
+    includeBuiltinNodes?: boolean;
+    runtime?: WorkflowRuntime;
+    theme?: 'dark' | 'light';
+    readOnly?: boolean;
+    historyLimit?: number;
+    autosave?: AutosaveHandler;
+    autosaveDelay?: number;
+    onAutosaveStatus?: (status: AutosaveStatus) => void;
+    services?: FlowCanvasServices;
+    renderers?: FlowCanvasRenderers;
+    plugins?: FlowCanvasPlugin[];
+}
+export declare class FlowCanvasSDK {
+    readonly engine: CanvasEngine;
+    private root?;
+    private container?;
+    private theme;
+    private readOnly;
+    private services;
+    private renderers;
+    private readonly baseNodeRenderers;
+    private readonly baseInspectorRenderers;
+    private readonly nodeRendererLayers;
+    private readonly inspectorRendererLayers;
+    private saveState?;
+    private readonly plugins;
+    private readonly autosave?;
+    private readonly disposeAutosave?;
+    private destroyed;
+    constructor(options?: FlowCanvasSDKOptions);
+    mount(target: HTMLElement | string): this;
+    unmount(): void;
+    destroy(): void;
+    flushAutosave(): Promise<AutosaveStatus | undefined>;
+    getAutosaveStatus(): AutosaveStatus | undefined;
+    import(input: string | GraphDocument): void;
+    export(space?: number): string;
+    getGraph(): GraphDocument;
+    validate(): ValidationResult;
+    run(options?: RuntimeOptions): Promise<WorkflowRunResult>;
+    runNode(nodeId: string, options?: RuntimeOptions): Promise<WorkflowRunResult>;
+    cancel(): void;
+    undo(): boolean;
+    redo(): boolean;
+    addNode(type: string, position: {
+        x: number;
+        y: number;
+    }, data?: Partial<CanvasNodeData>): CanvasNode;
+    addEdge(edge: EdgeInput): CanvasEdge;
+    registerNodeType<TData extends CanvasNodeData>(definition: NodeDefinition<TData>): () => void;
+    registerNodeRenderer(type: string, renderer: FlowCanvasNodeRenderer): () => void;
+    registerInspectorRenderer(type: string, renderer: FlowCanvasInspectorRenderer): () => void;
+    setServices(services: FlowCanvasServices): void;
+    getServices(): Readonly<FlowCanvasServices>;
+    use(plugin: FlowCanvasPlugin): () => void;
+    unuse(pluginId: string): boolean;
+    setTheme(theme: 'dark' | 'light'): void;
+    getTheme(): 'dark' | 'light';
+    setReadOnly(readOnly: boolean): void;
+    isReadOnly(): boolean;
+    on<K extends EngineEventName>(event: K, listener: (payload: EngineEventMap[K]) => void): () => void;
+    private render;
+    private refreshNodeRenderer;
+    private refreshInspectorRenderer;
+    private assertAlive;
+}

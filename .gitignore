@@ -1,0 +1,44 @@
+# Dependencies and generated output
+node_modules/
+.pnpm-store/
+dist/
+build/
+bin/
+release/
+delivery/
+artifacts/
+coverage/
+playwright-report/
+test-results/
+work/
+tmp/
+temp/
+.flowcanvas-generated/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+settings.json
+model-profiles.json
+
+# Logs and native build artifacts
+*.log
+*.tmp
+*.tsbuildinfo
+*.exe
+*.dll
+*.pdb
+*.zip
+*.7z
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/

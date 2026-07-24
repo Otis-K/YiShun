@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: https: data: blob:; media-src 'self' file: https: data: blob:; connect-src 'self' blob: data:; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'">
+  <title>Tool Plus 本地工作流画布</title>
+  <link rel="stylesheet" href="vendor/flowcanvas/styles.css">
+  <link rel="stylesheet" href="canvas-sdk-host.css">
+</head>
+<body>
+  <main id="canvas-shell">
+    <div id="flowcanvas-host" aria-label="Tool Plus 本地工作流画布"></div>
+    <div id="canvas-connection" class="canvasConnection is-local" role="status" aria-live="polite">
+      <span></span>
+      <strong>本地画布</strong>
+      <small>编辑与保存均在此电脑 · 图片模型由本机 Go 后端安全调用</small>
+    </div>
+    <div id="canvas-toast" class="canvasToast" role="alert" aria-live="assertive" hidden></div>
+  </main>
+  <script src="vendor/flowcanvas/flowcanvas.iife.js"></script>
+  <script src="canvas-sdk-adapter.js"></script>
+</body>
+</html>

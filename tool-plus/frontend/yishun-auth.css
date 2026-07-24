@@ -1,0 +1,49 @@
+.accountArea{position:relative;width:38px;height:38px;flex:0 0 38px}
+.avatarButton{width:38px;height:38px;padding:0;overflow:hidden;border:0;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--ink);font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 0 0 0 rgba(230,67,75,0);transition:box-shadow .16s ease,transform .16s ease}
+.avatarButton:hover{transform:translateY(-1px);box-shadow:0 0 0 3px rgba(230,67,75,.12)}
+.avatarButton:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.avatarButton img{width:100%;height:100%;display:block;object-fit:cover}
+.avatarButton img[hidden]{display:none}
+.accountMenu{position:absolute;z-index:70;top:48px;right:0;width:230px;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 18px 46px rgba(24,25,29,.18)}
+.accountSummary{min-width:0;padding:6px 6px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.accountSummary img{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#ededee}
+.accountSummary span{min-width:0;display:flex;flex-direction:column;gap:3px}
+.accountSummary strong{overflow:hidden;color:var(--ink);font-size:13px;text-overflow:ellipsis;white-space:nowrap}
+.accountSummary small{color:#9699a0;font-size:10px}
+.accountMenu>button{width:100%;height:36px;margin-top:8px;padding:0 10px;border:0;border-radius:6px;color:#666a72;background:#fff;text-align:left}
+.accountMenu>button:hover{color:#b72d36;background:#fff3f4}
+.loginDialog{width:min(440px,calc(100vw - 28px));max-height:calc(100vh - 32px);padding:0;border:0;border-radius:8px;background:#fff;box-shadow:0 28px 90px rgba(13,14,17,.32)}
+.loginDialog::backdrop{background:rgba(16,17,20,.62);backdrop-filter:blur(7px)}
+.loginDialogShell{overflow:hidden}
+.loginDialog header{min-height:74px;padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.loginDialog header span{color:var(--brand);font-size:9px;font-weight:800;letter-spacing:1.5px}
+.loginDialog h2{margin:3px 0 0;color:var(--ink);font-size:19px}
+.loginDialog header button{width:34px;height:34px;padding:0;border:0;border-radius:6px;display:grid;place-items:center;color:#8f9299;background:#f5f5f6}
+.loginDialog header button:hover{color:var(--ink);background:#ececee}
+.loginDialog header svg{width:17px;height:17px}
+.loginDialogBody{padding:20px 20px 18px}
+.loginLead{margin:0 0 16px;color:#777b83;font-size:12px;line-height:1.7}
+.serviceTerms{border:1px solid var(--line);border-radius:8px;background:#fafafa}
+.serviceTerms summary{height:54px;padding:0 13px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none}
+.serviceTerms summary::-webkit-details-marker{display:none}
+.serviceTerms summary>span{display:flex;align-items:center;gap:9px;color:var(--ink);font-size:12px}
+.serviceTerms summary svg{width:18px;height:18px;color:#737780}
+.serviceTerms summary b{color:#999ca3;font-size:10px;font-weight:600}
+.serviceTerms[open] summary{border-bottom:1px solid var(--line)}
+.serviceTerms>div{padding:12px 14px;color:#777b83;font-size:11px;line-height:1.7}
+.serviceTerms p{margin:0}
+.serviceTerms p+p{margin-top:7px}
+.loginDivider{height:52px;display:flex;align-items:center;gap:10px;color:#999ca3;font-size:10px}
+.loginDivider::before,.loginDivider::after{content:"";height:1px;flex:1;background:var(--line)}
+.loginDivider span{white-space:nowrap}
+.qqLoginButton{width:100%;height:46px;border:1px solid #d7d9de;border-radius:7px;display:flex;align-items:center;justify-content:center;gap:10px;color:#30333a;background:#fff;font-size:13px}
+.qqLoginButton>span{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#12a5e8;font-size:9px;font-weight:900}
+.qqLoginButton:hover:not(:disabled){border-color:#12a5e8;background:#f3fbff}
+.qqLoginButton:disabled{cursor:not-allowed;opacity:.5}
+.agreementCheck{margin-top:14px;display:grid;grid-template-columns:16px minmax(0,1fr);align-items:start;gap:8px;color:#858890;font-size:10px;line-height:1.6}
+.agreementCheck input{width:15px;height:15px;margin:1px 0 0;accent-color:var(--brand)}
+.agreementCheck a{color:var(--brand);text-decoration:none}
+.agreementCheck a:hover{text-decoration:underline}
+.loginHint{min-height:17px;margin:8px 0 0;color:#989ba2;font-size:10px;text-align:center}
+.loginHint[data-tone=error]{color:#b9323c}
+@media(max-width:760px){.accountMenu{position:fixed;top:68px;right:12px}.loginDialogBody{padding:18px 16px}.loginDialog header{padding:14px 16px}}

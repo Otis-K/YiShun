@@ -1,0 +1,103 @@
+:root {
+  color-scheme: dark;
+  font-family: "Microsoft YaHei UI", "Segoe UI", sans-serif;
+  background: #090b13;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#canvas-shell,
+#flowcanvas-host {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #090b13;
+}
+
+.canvasConnection {
+  position: fixed;
+  z-index: 40;
+  top: 14px;
+  left: 50%;
+  min-width: 260px;
+  max-width: min(520px, calc(100vw - 420px));
+  min-height: 34px;
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 999px;
+  color: #d9dceb;
+  background: rgba(18, 20, 31, .88);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .22);
+  backdrop-filter: blur(16px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.canvasConnection > span {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #f6b94b;
+  box-shadow: 0 0 0 4px rgba(246, 185, 75, .12);
+}
+
+.canvasConnection strong {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.canvasConnection small {
+  min-width: 0;
+  overflow: hidden;
+  color: #9298ad;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canvasConnection.is-online > span {
+  background: #65dc9a;
+  box-shadow: 0 0 0 4px rgba(101, 220, 154, .12);
+}
+
+.canvasConnection.is-error > span {
+  background: #ff6b7c;
+  box-shadow: 0 0 0 4px rgba(255, 107, 124, .12);
+}
+
+.canvasToast {
+  position: fixed;
+  z-index: 80;
+  right: 18px;
+  bottom: 18px;
+  max-width: min(420px, calc(100vw - 36px));
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 10px;
+  color: #f0f2fa;
+  background: rgba(22, 24, 36, .96);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .3);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .canvasConnection {
+    top: 64px;
+    min-width: 0;
+    max-width: calc(100vw - 28px);
+  }
+}

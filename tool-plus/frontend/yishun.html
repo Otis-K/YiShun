@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>衣瞬 - AI 服装视觉创作</title>
+  <link rel="stylesheet" href="yishun.css">
+  <link rel="stylesheet" href="yishun-auth.css">
+  <link rel="stylesheet" href="yishun-model-management.css">
+  <link rel="stylesheet" href="yishun-tryon.css">
+  <link rel="stylesheet" href="yishun-double-commercial.css">
+</head>
+<body>
+  <svg class="iconSprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3-1.3 3.7L7 8l3.7 1.3L12 13l1.3-3.7L17 8l-3.7-1.3ZM5 15l-.8 2.2L2 18l2.2.8L5 21l.8-2.2L8 18l-2.2-.8ZM19 14l-.9 2.6-2.6.9 2.6.9L19 21l.9-2.6 2.6-.9-2.6-.9Z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 17l9 5 9-5"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="15" height="14" rx="2"/><path d="m18 10 4-2v8l-4-2Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 15a2 2 0 0 0 .4 2l.1.1-2.4 2.4-.1-.1a2 2 0 0 0-2-.4 2 2 0 0 0-1 1.8v.2h-4v-.2A2 2 0 0 0 9 19a2 2 0 0 0-2 .4l-.1.1-2.4-2.4.1-.1A2 2 0 0 0 5 15a2 2 0 0 0-1.8-1H3v-4h.2A2 2 0 0 0 5 9a2 2 0 0 0-.4-2l-.1-.1 2.4-2.4.1.1A2 2 0 0 0 9 5a2 2 0 0 0 1-1.8V3h4v.2A2 2 0 0 0 15 5a2 2 0 0 0 2-.4l.1-.1 2.4 2.4-.1.1a2 2 0 0 0-.4 2 2 2 0 0 0 1.8 1h.2v4h-.2a2 2 0 0 0-1.8 1Z"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.5 2.5 0 1 1 3.6 2.3c-.9.5-1.4 1-1.4 2.2M12 17h.01"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6M9 12h10"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></symbol>
+    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="m20.4 3.6-4-1.5a4.8 4.8 0 0 1-8.8 0l-4 1.5L1.5 9l4 2v11h13V11l4-2-2.1-5.4Z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 14v6h14v-6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7h-5V2M4 17h5v5M18.5 9A7 7 0 0 0 6 6.5L4 9m16 6-2 2.5A7 7 0 0 1 5.5 15"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M15 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M16 11h6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <button class="brand" id="homeBtn" aria-label="衣瞬首页"><img src="assets/yishun/yishun-logo.png" alt="衣瞬 YISHUN"></button>
+    <div class="topActions">
+      <div class="localStatus" id="serviceIndicator"><span></span><strong id="serviceStatus">正在连接</strong></div>
+      <button class="iconBtn" id="helpBtn" aria-label="帮助" title="帮助"><svg><use href="#i-help"/></svg></button>
+      <button class="settingsBtn" id="settingsBtn"><svg><use href="#i-settings"/></svg><span>设置</span></button>
+      <div class="accountArea">
+        <button class="avatarButton" id="accountButton" type="button" aria-label="登录或查看账户" aria-haspopup="dialog" aria-expanded="false">
+          <span id="accountInitial">衣</span>
+          <img id="accountAvatar" alt="QQ 用户头像" referrerpolicy="no-referrer" hidden>
+        </button>
+        <div class="accountMenu" id="accountMenu" role="menu" hidden>
+          <div class="accountSummary"><img id="accountMenuAvatar" alt="" referrerpolicy="no-referrer"><span><strong id="accountNickname">QQ 用户</strong><small>已通过 QQ 登录</small></span></div>
+          <button id="logoutButton" type="button" role="menuitem">退出登录</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <nav>
+        <button class="sideItem active" data-nav="home"><svg><use href="#i-home"/></svg><span>首页</span></button>
+        <button class="sideItem" data-nav="models"><svg><use href="#i-users"/></svg><span>模特库</span><small id="modelCount">8</small></button>
+        <button class="sideItem" data-nav="canvas"><svg><use href="#i-spark"/></svg><span>智能画布</span></button>
+        <div class="navDivider"></div><p class="navLabel">创作能力</p>
+        <button class="sideItem" data-nav="tryon"><svg><use href="#i-shirt"/></svg><span>AI 试衣</span></button>
+        <button class="sideItem" data-nav="double-commercial"><svg><use href="#i-users"/></svg><span>双人商拍</span></button>
+        <button class="sideItem" data-workflow="scene"><svg><use href="#i-layers"/></svg><span>场景创作</span></button>
+        <button class="sideItem" data-workflow="video"><svg><use href="#i-video"/></svg><span>视频生成</span></button>
+        <button class="sideItem" data-workflow="history"><svg><use href="#i-clock"/></svg><span>历史创作</span></button>
+      </nav>
+      <div class="sideFoot"><span><svg><use href="#i-spark"/></svg></span><div><strong>衣瞬工作台</strong><small>AI 服装视觉创作</small></div></div>
+    </aside>
+
+    <main class="mainPanel">
+      <section id="galleryView" class="galleryView">
+        <div class="pageInner">
+          <header class="welcome"><p>YISHUN CREATIVE STUDIO</p><h1><span id="greeting">早上好</span>，今天准备创作什么视觉大片？</h1><small>从优选模特开始，快速完成换装、场景和服装视觉创作。</small></header>
+          <section class="featureGrid">
+            <article class="featureCard"><img src="assets/yishun/banner-tryon.jpg" alt="时尚模特"><div><span>01 / MODEL</span><h2>智能模特换装</h2><p>上传单品图，快速生成不同模特的上身视觉。</p><button data-workflow="tryon">进入创作 <svg><use href="#i-arrow"/></svg></button></div></article>
+            <article class="featureCard"><img src="assets/yishun/banner-scene.jpg" alt="都市视觉场景"><div><span>02 / SCENE</span><h2>场景与光影</h2><p>组合人物与环境，让商品图拥有完整氛围。</p><button data-workflow="scene">进入创作 <svg><use href="#i-arrow"/></svg></button></div></article>
+            <article class="featureCard"><img src="assets/yishun/banner-style.jpg" alt="服装风格创作"><div><span>03 / STYLE</span><h2>服装款式改造</h2><p>探索版型、面料与配色，扩展商品设计方向。</p><button data-workflow="style">进入创作 <svg><use href="#i-arrow"/></svg></button></div></article>
+          </section>
+
+          <section class="modelSection" id="modelsSection">
+            <header class="sectionHead">
+              <div><p>CURATED MODELS</p><h2>优选模特</h2></div>
+              <div class="modelTools">
+                <label class="searchBox"><svg><use href="#i-search"/></svg><input id="modelSearch" type="search" placeholder="搜索模特或风格"></label>
+                <div class="modelToolRow">
+                  <div class="filterTabs"><button class="active" data-filter="all">全部</button><button data-filter="female">女模</button><button data-filter="male">男模</button><button data-filter="editorial">大片感</button><button data-filter="casual">日常</button><button data-filter="custom">我的模特</button></div>
+                  <button id="addModelBtn" class="addModelButton" type="button" aria-label="新增模特" title="新增模特"><svg><use href="#i-user-plus"/></svg><span>新增模特</span></button>
+                </div>
+              </div>
+            </header>
+            <div class="modelGrid" id="modelGrid"></div>
+            <div class="emptyState" id="modelEmpty" hidden><strong>没有找到匹配的模特</strong><span>调整关键词或切换筛选条件。</span><button id="resetFilterBtn">查看全部模特</button></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tryonView" class="tryonView" hidden>
+        <div class="tryonWorkspace">
+          <aside class="tryonControls">
+            <header class="tryonHeading">
+              <button id="tryonBackBtn" class="tryonBackButton" type="button"><svg><use href="#i-back"/></svg><span>返回首页</span></button>
+              <p>YISHUN AI FITTING</p>
+              <h1>AI 试衣</h1>
+              <small>人物图 + 服装图，生成自然上身效果</small>
+            </header>
+
+            <section class="tryonControlSection" aria-labelledby="tryon-assets-title">
+              <div class="tryonControlTitle"><h2 id="tryon-assets-title">参考图片</h2><span>JPG、PNG、WebP · 单张不超过 25MB</span></div>
+              <div class="tryonUploadGrid">
+                <div class="tryonUpload" data-upload="person">
+                  <button class="tryonUploadTarget" type="button" data-select-upload="person">
+                    <span class="tryonUploadEmpty"><svg><use href="#i-users"/></svg><strong>人物图</strong><small>正面全身照</small></span>
+                    <img id="tryonPersonPreview" alt="人物图预览" hidden>
+                    <span class="tryonUploadMeta" id="tryonPersonMeta" hidden></span>
+                  </button>
+                  <button class="tryonUploadRemove" type="button" data-remove-upload="person" title="移除人物图" aria-label="移除人物图" hidden><svg><use href="#i-close"/></svg></button>
+                  <input id="tryonPersonInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                </div>
+                <div class="tryonUpload" data-upload="garment">
+                  <button class="tryonUploadTarget" type="button" data-select-upload="garment">
+                    <span class="tryonUploadEmpty"><svg><use href="#i-shirt"/></svg><strong>服装图</strong><small>平铺或白底图</small></span>
+                    <img id="tryonGarmentPreview" alt="服装图预览" hidden>
+                    <span class="tryonUploadMeta" id="tryonGarmentMeta" hidden></span>
+                  </button>
+                  <button class="tryonUploadRemove" type="button" data-remove-upload="garment" title="移除服装图" aria-label="移除服装图" hidden><svg><use href="#i-close"/></svg></button>
+                  <input id="tryonGarmentInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                </div>
+              </div>
+            </section>
+
+            <section class="tryonControlSection" aria-labelledby="tryon-type-title">
+              <div class="tryonControlTitle"><h2 id="tryon-type-title">服装类型</h2></div>
+              <div class="tryonSegments" id="tryonGarmentType" role="group" aria-label="服装类型">
+                <button class="active" type="button" data-value="auto">自动识别</button>
+                <button type="button" data-value="top">上装</button>
+                <button type="button" data-value="bottom">下装</button>
+                <button type="button" data-value="dress">连衣裙</button>
+                <button type="button" data-value="outfit">套装</button>
+              </div>
+            </section>
+
+            <section class="tryonControlSection" aria-labelledby="tryon-ratio-title">
+              <div class="tryonControlTitle"><h2 id="tryon-ratio-title">输出比例</h2><span>标准画质 · 2K</span></div>
+              <div class="tryonSegments tryonRatioSegments" id="tryonRatio" role="group" aria-label="输出比例">
+                <button class="active" type="button" data-value="3:4"><i class="is-portrait"></i>3:4</button>
+                <button type="button" data-value="4:5"><i class="is-tall"></i>4:5</button>
+                <button type="button" data-value="1:1"><i class="is-square"></i>1:1</button>
+              </div>
+            </section>
+
+            <div class="tryonControlActions">
+              <button id="tryonResetBtn" class="tryonSecondaryButton" type="button"><svg><use href="#i-refresh"/></svg><span>重置</span></button>
+              <button id="tryonGenerateBtn" class="tryonGenerateButton" type="button" disabled><svg><use href="#i-spark"/></svg><span>开始生成</span></button>
+            </div>
+          </aside>
+
+          <section class="tryonStage" aria-label="AI 试衣结果">
+            <header class="tryonStageHeader">
+              <div><p>RESULT PREVIEW</p><h2>试衣结果</h2></div>
+              <button id="tryonSaveBtn" class="tryonSaveButton" type="button" disabled><svg><use href="#i-download"/></svg><span>保存结果</span></button>
+            </header>
+            <div class="tryonResultSurface" id="tryonResultSurface">
+              <div class="tryonEmptyResult" id="tryonEmptyResult">
+                <div class="tryonFormula" aria-hidden="true">
+                  <span><svg><use href="#i-users"/></svg></span><b>+</b><span><svg><use href="#i-shirt"/></svg></span><b>=</b><span class="is-result"><svg><use href="#i-spark"/></svg></span>
+                </div>
+                <h2>准备创建试衣效果</h2>
+                <p>上传人物图和服装图后开始生成</p>
+              </div>
+              <figure class="tryonResult" id="tryonResult" hidden><img id="tryonResultImage" alt="AI 试衣生成结果"><figcaption id="tryonResultCaption">AI 试衣结果</figcaption></figure>
+              <div class="tryonLoading" id="tryonLoading" hidden>
+                <span class="tryonSpinner"></span>
+                <strong id="tryonProgressText">正在准备生成</strong>
+                <div class="tryonProgressTrack"><i id="tryonProgressBar"></i></div>
+                <small id="tryonProgressValue">0%</small>
+              </div>
+            </div>
+            <footer class="tryonStageFooter">
+              <div class="tryonSourceThumb"><span>人物</span><img id="tryonPersonThumb" alt="人物参考图" hidden><i id="tryonPersonPlaceholder"><svg><use href="#i-users"/></svg></i></div>
+              <div class="tryonSourceConnector"><span></span><svg><use href="#i-arrow"/></svg><span></span></div>
+              <div class="tryonSourceThumb"><span>服装</span><img id="tryonGarmentThumb" alt="服装参考图" hidden><i id="tryonGarmentPlaceholder"><svg><use href="#i-shirt"/></svg></i></div>
+              <div class="tryonResultStatus"><i></i><strong id="tryonStatusText">等待上传素材</strong></div>
+            </footer>
+          </section>
+        </div>
+      </section>
+
+      <section id="doubleCommercialView" class="doubleCommercialView" hidden>
+        <div class="dcWorkspace">
+          <aside class="dcControls">
+            <div class="dcControlsScroll">
+              <header class="dcHeading">
+                <button id="doubleCommercialBackBtn" class="dcBackButton" type="button"><svg><use href="#i-back"/></svg><span>返回首页</span></button>
+                <p>DOUBLE COMMERCIAL</p>
+                <h1>双人商拍</h1>
+                <small>设置双人模特与服装参数</small>
+              </header>
+
+              <section class="dcControlSection" aria-labelledby="dc-relationship-title">
+                <div class="dcControlTitle"><h2 id="dc-relationship-title">人物关系</h2><span>决定模特组合</span></div>
+                <div class="dcSegments" id="doubleCommercialRelationship" role="group" aria-label="人物关系">
+                  <button class="active" type="button" data-value="couple">情侣</button>
+                  <button type="button" data-value="brothers">兄弟</button>
+                  <button type="button" data-value="besties">闺蜜</button>
+                </div>
+              </section>
+
+              <section class="dcControlSection" aria-labelledby="dc-upload-title">
+                <div class="dcControlTitle"><h2 id="dc-upload-title">服装与场景</h2><span>JPG、PNG、WebP · 不超过 25MB</span></div>
+                <div class="dcUploadGrid">
+                  <div class="dcUpload dcUploadGarment" data-dc-upload="garment">
+                    <button class="dcUploadTarget" type="button" data-dc-select-upload="garment">
+                      <span class="dcUploadEmpty"><svg><use href="#i-upload"/></svg><strong>上传服装样件</strong><small>必填 · 平铺或白底图</small></span>
+                      <img id="doubleCommercialGarmentPreview" alt="服装样件预览" hidden>
+                      <span class="dcUploadMeta" id="doubleCommercialGarmentMeta" hidden></span>
+                    </button>
+                    <button class="dcUploadRemove" type="button" data-dc-remove-upload="garment" title="移除服装样件" aria-label="移除服装样件" hidden><svg><use href="#i-close"/></svg></button>
+                    <input id="doubleCommercialGarmentInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                  </div>
+                  <div class="dcUpload dcUploadScene" data-dc-upload="scene">
+                    <button class="dcUploadTarget" type="button" data-dc-select-upload="scene">
+                      <span class="dcUploadEmpty"><svg><use href="#i-image"/></svg><strong>场景参考图</strong><small>可选 · 决定构图氛围</small></span>
+                      <img id="doubleCommercialScenePreview" alt="场景参考图预览" hidden>
+                      <span class="dcUploadMeta" id="doubleCommercialSceneMeta" hidden></span>
+                    </button>
+                    <button class="dcUploadRemove" type="button" data-dc-remove-upload="scene" title="移除场景参考图" aria-label="移除场景参考图" hidden><svg><use href="#i-close"/></svg></button>
+                    <input id="doubleCommercialSceneInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                  </div>
+                </div>
+              </section>
+
+              <section class="dcControlSection" aria-labelledby="dc-model-title">
+                <div class="dcControlTitle"><h2 id="dc-model-title">双人模特</h2><span id="doubleCommercialModelHint">选择一位男模与一位女模</span></div>
+                <div class="dcModelSlots">
+                  <div class="dcModelSlot" data-dc-model-wrapper="modelA">
+                    <button type="button" data-model-slot="modelA">
+                      <span class="dcModelEmpty"><svg><use href="#i-user-plus"/></svg><strong id="doubleCommercialModelALabel">男模特 A</strong><small>点击选择</small></span>
+                      <img id="doubleCommercialModelAImage" alt="模特 A" hidden>
+                      <span class="dcModelSelected" id="doubleCommercialModelASelected" hidden><strong></strong><small></small></span>
+                    </button>
+                    <button class="dcModelRemove" type="button" data-remove-model="modelA" title="移除模特 A" aria-label="移除模特 A" hidden><svg><use href="#i-close"/></svg></button>
+                  </div>
+                  <div class="dcModelSlot" data-dc-model-wrapper="modelB">
+                    <button type="button" data-model-slot="modelB">
+                      <span class="dcModelEmpty"><svg><use href="#i-user-plus"/></svg><strong id="doubleCommercialModelBLabel">女模特 B</strong><small>点击选择</small></span>
+                      <img id="doubleCommercialModelBImage" alt="模特 B" hidden>
+                      <span class="dcModelSelected" id="doubleCommercialModelBSelected" hidden><strong></strong><small></small></span>
+                    </button>
+                    <button class="dcModelRemove" type="button" data-remove-model="modelB" title="移除模特 B" aria-label="移除模特 B" hidden><svg><use href="#i-close"/></svg></button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="dcControlSection" aria-labelledby="dc-output-title">
+                <div class="dcControlTitle"><h2 id="dc-output-title">规格参数</h2></div>
+                <label class="dcFieldLabel">尺寸比例</label>
+                <div class="dcRatioOptions" id="doubleCommercialRatio" role="group" aria-label="尺寸比例">
+                  <button class="active" type="button" data-value="auto"><i class="is-auto"></i><span>智能匹配</span></button>
+                  <button type="button" data-value="3:4"><i class="is-three-four"></i><span>3:4</span></button>
+                  <button type="button" data-value="1:1"><i class="is-square"></i><span>1:1</span></button>
+                  <button type="button" data-value="9:16"><i class="is-nine-sixteen"></i><span>9:16</span></button>
+                  <button type="button" data-value="16:9"><i class="is-sixteen-nine"></i><span>16:9</span></button>
+                </div>
+                <label class="dcFieldLabel">清晰度</label>
+                <div class="dcQualityOptions" id="doubleCommercialQuality" role="group" aria-label="清晰度">
+                  <button class="active" type="button" data-value="2K"><strong>2K</strong><small>标准高清</small></button>
+                  <button type="button" data-value="4K"><strong>4K</strong><small>超清细节</small></button>
+                </div>
+              </section>
+            </div>
+
+            <div class="dcControlActions">
+              <button id="doubleCommercialResetBtn" class="dcSecondaryButton" type="button"><svg><use href="#i-refresh"/></svg><span>重置</span></button>
+              <button id="doubleCommercialGenerateBtn" class="dcGenerateButton" type="button" disabled><svg><use href="#i-spark"/></svg><span>立即生成双人商拍图</span></button>
+            </div>
+          </aside>
+
+          <section class="dcStage" aria-label="双人商拍生成结果">
+            <header class="dcStageHeader">
+              <div><p>COMMERCIAL PREVIEW</p><h2>双人商拍结果</h2></div>
+              <button id="doubleCommercialSaveBtn" class="dcSaveButton" type="button" disabled><svg><use href="#i-download"/></svg><span>保存结果</span></button>
+            </header>
+            <div class="dcResultSurface" id="doubleCommercialResultSurface">
+              <div class="dcEmptyResult" id="doubleCommercialEmptyResult">
+                <h2>生成双人商拍图</h2>
+                <div class="dcFormula" aria-hidden="true">
+                  <span><svg><use href="#i-shirt"/></svg><small>服装样件</small></span><b><svg><use href="#i-arrow"/></svg></b><span><svg><use href="#i-users"/></svg><small>选择双模特</small></span><b><svg><use href="#i-arrow"/></svg></b><span class="is-result"><svg><use href="#i-spark"/></svg><small>商拍结果</small></span>
+                </div>
+                <p>上传服装并选择两位模特后开始生成</p>
+              </div>
+              <figure class="dcResult" id="doubleCommercialResult" hidden><img id="doubleCommercialResultImage" alt="双人商拍生成结果"><figcaption id="doubleCommercialResultCaption">双人商拍结果</figcaption></figure>
+              <div class="dcLoading" id="doubleCommercialLoading" hidden>
+                <span class="dcSpinner"></span>
+                <strong id="doubleCommercialProgressText">正在准备生成</strong>
+                <div class="dcProgressTrack"><i id="doubleCommercialProgressBar"></i></div>
+                <small id="doubleCommercialProgressValue">0%</small>
+              </div>
+            </div>
+            <footer class="dcStageFooter">
+              <div class="dcSourceThumb"><span>模特 A</span><img id="doubleCommercialModelAThumb" alt="模特 A 参考图" hidden><i id="doubleCommercialModelAPlaceholder"><svg><use href="#i-users"/></svg></i></div>
+              <div class="dcSourceThumb"><span>模特 B</span><img id="doubleCommercialModelBThumb" alt="模特 B 参考图" hidden><i id="doubleCommercialModelBPlaceholder"><svg><use href="#i-users"/></svg></i></div>
+              <div class="dcSourceThumb"><span>服装</span><img id="doubleCommercialGarmentThumb" alt="服装参考图" hidden><i id="doubleCommercialGarmentPlaceholder"><svg><use href="#i-shirt"/></svg></i></div>
+              <div class="dcSourceThumb dcSceneThumb"><span>场景</span><img id="doubleCommercialSceneThumb" alt="场景参考图" hidden><i id="doubleCommercialScenePlaceholder"><svg><use href="#i-image"/></svg></i></div>
+              <div class="dcResultStatus"><i></i><strong id="doubleCommercialStatusText">等待配置素材</strong></div>
+            </footer>
+          </section>
+        </div>
+      </section>
+
+      <section id="canvasView" class="canvasView" hidden>
+        <header class="canvasHeader">
+          <button id="canvasBackBtn" class="canvasBackButton"><svg><use href="#i-back"/></svg><span>返回模特库</span></button>
+          <div class="canvasTitle"><small>YISHUN CANVAS</small><h1 id="canvasTitle">智能画布</h1></div>
+          <div class="canvasActions"><div class="canvasState"><span></span><strong id="canvasStatus">主窗口内运行</strong></div><button id="canvasImmersiveBtn" class="canvasImmersiveButton" aria-pressed="true"><svg><use href="#i-expand"/></svg><span>显示导航</span></button></div>
+        </header>
+        <iframe id="canvasFrame" class="canvasFrame" data-src="canvas.html" title="衣瞬智能画布" sandbox="allow-scripts allow-same-origin allow-downloads" referrerpolicy="no-referrer"></iframe>
+      </section>
+    </main>
+  </div>
+
+  <div id="noticeBar" class="noticeBar" role="status" hidden></div>
+
+  <dialog id="loginDialog" class="loginDialog" aria-labelledby="loginTitle">
+    <div class="loginDialogShell">
+      <header>
+        <div><span>YISHUN ACCOUNT</span><h2 id="loginTitle">登录</h2></div>
+        <button id="loginCloseButton" type="button" aria-label="关闭登录窗口"><svg><use href="#i-close"/></svg></button>
+      </header>
+      <div class="loginDialogBody">
+        <p class="loginLead">登录后可识别您的衣瞬账号并显示个人信息。</p>
+        <details class="serviceTerms">
+          <summary><span><svg><use href="#i-help"/></svg><strong>服务协议</strong></span><b>查看</b></summary>
+          <div>
+            <p>QQ 登录仅会获取您的 QQ 用户标识、昵称和头像，用于创建并识别衣瞬账号。衣瞬不会获取您的 QQ 密码。</p>
+            <p>登录及继续使用服务表示您同意遵守平台规则，并授权我们按隐私政策处理上述必要信息。</p>
+          </div>
+        </details>
+        <div class="loginDivider"><span>使用以下方式登录</span></div>
+        <button class="qqLoginButton" id="qqLoginButton" type="button" disabled><span aria-hidden="true">QQ</span><strong>QQ 登录</strong></button>
+        <label class="agreementCheck"><input id="agreementCheckbox" type="checkbox"><span>我已阅读并同意 <a href="terms.html" target="_blank" rel="noopener">《用户协议》</a>和<a href="privacy.html" target="_blank" rel="noopener">《隐私政策》</a></span></label>
+        <p class="loginHint" id="loginHint" role="status">正在检查 QQ 登录服务…</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="settingsDialog" class="appDialog">
+    <form method="dialog" id="settingsForm">
+      <header><div><span>YISHUN SETTINGS</span><h2>模型设置</h2></div><button value="cancel" aria-label="关闭">×</button></header>
+      <div class="dialogBody">
+        <section><h3>图片生成模型 <small id="imageConfigState">读取中</small></h3><label>API 地址<input id="canvasImageBaseURL" type="url"></label><label>模型名称<input id="canvasImageModel"></label><label>API Key<input id="canvasModelApiKey" type="password" placeholder="留空则保留当前服务会话密钥"></label></section>
+        <section><h3>视频生成模型 <small id="videoConfigState">读取中</small></h3><label>API 地址<input id="canvasVideoBaseURL" type="url"></label><label>模型名称<input id="canvasVideoModel"></label><label>API Key<input id="canvasVideoModelApiKey" type="password" placeholder="留空则保留当前服务会话密钥"></label></section>
+      </div>
+      <footer><button value="cancel">取消</button><button class="primary" id="saveSettingsBtn" value="default">保存设置</button></footer>
+    </form>
+  </dialog>
+  <dialog id="modelEditorDialog" class="appDialog modelEditorDialog">
+    <form id="modelEditorForm">
+      <header><div><span>MODEL MANAGEMENT</span><h2 id="modelEditorTitle">新增模特</h2></div><button id="modelEditorClose" type="button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></header>
+      <div class="modelEditorBody">
+        <section class="modelPhotoEditor">
+          <div class="modelPhotoPreview" id="modelPhotoPreview"><img id="modelPhotoPreviewImage" alt="模特照片预览" hidden><span id="modelPhotoPlaceholder"><svg><use href="#i-user-plus"/></svg><strong>上传模特照片</strong><small>建议使用正面清晰半身照</small></span></div>
+          <label class="modelPhotoSelect"><svg><use href="#i-upload"/></svg><span id="modelPhotoSelectLabel">选择照片</span><input id="modelPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></label>
+          <small id="modelPhotoHint">JPG、PNG、WebP，单张不超过 25MB</small>
+        </section>
+        <section class="modelEditorFields">
+          <div class="modelFieldGrid">
+            <label><span>模特姓名</span><input id="modelNameInput" type="text" maxlength="40" autocomplete="off" required placeholder="例如：林悦"></label>
+            <label><span>性别</span><select id="modelGenderInput"><option value="female">女模</option><option value="male">男模</option></select></label>
+            <label><span>风格</span><select id="modelStyleInput"><option value="editorial">大片感</option><option value="casual">日常</option></select></label>
+            <label><span>年龄段</span><select id="modelAgeInput"><option value="青年">青年</option><option value="成熟">成熟</option></select></label>
+            <label><span>地区</span><input id="modelRegionInput" type="text" maxlength="24" autocomplete="off" placeholder="例如：亚洲"></label>
+            <label><span>展示标签</span><input id="modelTagInput" type="text" maxlength="24" autocomplete="off" placeholder="例如：都市通勤"></label>
+          </div>
+          <label class="modelMetaField"><span>模特信息</span><textarea id="modelMetaInput" maxlength="160" rows="4" placeholder="补充气质、拍摄方向或适用服装等信息"></textarea><small><b id="modelMetaCount">0</b>/160</small></label>
+        </section>
+      </div>
+      <footer><button id="modelEditorCancel" type="button">取消</button><button class="primary" id="modelEditorSubmit" type="submit"><svg><use href="#i-user-plus"/></svg><span>保存模特</span></button></footer>
+    </form>
+  </dialog>
+  <dialog id="modelDeleteDialog" class="appDialog modelDeleteDialog">
+    <form id="modelDeleteForm">
+      <header><div><span>DELETE MODEL</span><h2>删除模特</h2></div><button id="modelDeleteClose" type="button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></header>
+      <div class="modelDeleteBody"><span><svg><use href="#i-trash"/></svg></span><div><strong>确认删除“<b id="modelDeleteName"></b>”吗？</strong><p>删除后，该模特照片和信息将从本机模特库中移除，且无法恢复。</p></div></div>
+      <footer><button id="modelDeleteCancel" type="button">取消</button><button class="modelDeleteConfirm" id="modelDeleteConfirm" type="submit"><svg><use href="#i-trash"/></svg><span>确认删除</span></button></footer>
+    </form>
+  </dialog>
+  <dialog id="helpDialog" class="appDialog helpDialog"><form method="dialog"><header><div><span>ABOUT YISHUN</span><h2>衣瞬工作台</h2></div><button value="cancel">×</button></header><div class="helpBody"><p>选择模特后进入智能画布，组合素材、提示词、图片和视频节点完成服装视觉创作。画布文档保存在当前电脑。</p><ol><li><strong>选择模特</strong><span>从模特库找到适合商品定位的人物。</span></li><li><strong>进入画布</strong><span>编排素材与生成节点。</span></li><li><strong>保存创作</strong><span>画布自动保存，下次继续编辑。</span></li></ol></div><footer><button class="primary" value="default">知道了</button></footer></form></dialog>
+  <dialog id="doubleCommercialModelModal" class="dcModelDialog">
+    <div class="dcModelDialogShell">
+      <header>
+        <div><span><svg><use href="#i-users"/></svg></span><div><p>MODEL LIBRARY</p><h2 id="doubleCommercialModalTitle">选择模特</h2></div></div>
+        <button id="doubleCommercialModelClose" type="button" aria-label="关闭模特选择"><svg><use href="#i-close"/></svg></button>
+      </header>
+      <div class="dcModelAdvice"><strong>i</strong><span>建议选择与服装风格相匹配、面部清晰的模特，以获得更真实的商拍效果。</span></div>
+      <nav class="dcModelTabs" id="doubleCommercialModelTabs" aria-label="模特来源">
+        <button class="active" type="button" data-model-tab="official">官方模特</button>
+        <button type="button" data-model-tab="custom">我的专属</button>
+        <button type="button" data-model-tab="favorites">我的收藏</button>
+        <button type="button" data-model-tab="reference">参考图</button>
+      </nav>
+      <div class="dcModelToolbar">
+        <div class="dcModelFilters">
+          <label>地区<select id="doubleCommercialRegionFilter"><option value="all">全部</option><option value="亚洲">亚洲</option><option value="欧美">欧美</option></select></label>
+          <label>年龄段<select id="doubleCommercialAgeFilter"><option value="all">全部</option><option value="青年">青年</option><option value="成熟">成熟</option></select></label>
+        </div>
+        <label class="dcModelSearch"><svg><use href="#i-search"/></svg><input id="doubleCommercialModelSearch" type="search" maxlength="60" placeholder="搜索模特名称、风格"></label>
+        <button id="doubleCommercialAddModelBtn" class="dcModelAddButton" type="button" hidden><svg><use href="#i-user-plus"/></svg><span>添加模特</span></button>
+        <button id="doubleCommercialReferenceBtn" class="dcModelAddButton" type="button" hidden><svg><use href="#i-upload"/></svg><span>上传参考图</span></button>
+        <input id="doubleCommercialReferenceInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+      </div>
+      <section id="doubleCommercialCreatePanel" class="dcCreatePanel" hidden aria-label="添加专属模特">
+        <div class="dcCreatePreview"><img id="doubleCommercialCreatePreview" alt="新模特预览" hidden><span id="doubleCommercialCreatePlaceholder"><svg><use href="#i-user-plus"/></svg></span></div>
+        <div class="dcCreateFields">
+          <label>模特名称<input id="doubleCommercialCreateName" type="text" maxlength="30" autocomplete="off" placeholder="例如：小林"></label>
+          <label>模特性别<select id="doubleCommercialCreateGender"><option value="female">女模</option><option value="male">男模</option></select></label>
+          <label class="dcCreateFile"><span>上传照片</span><input id="doubleCommercialCreateFile" type="file" accept="image/jpeg,image/png,image/webp"><small id="doubleCommercialCreateFileName">请选择正面清晰照片</small></label>
+        </div>
+        <div class="dcCreateActions"><button id="doubleCommercialCreateCancel" type="button">取消</button><button id="doubleCommercialCreateSubmit" type="button">保存模特</button></div>
+      </section>
+      <div id="doubleCommercialModelGrid" class="dcPickerGrid" aria-live="polite"></div>
+      <div id="doubleCommercialModelEmpty" class="dcPickerEmpty" hidden><svg><use href="#i-users"/></svg><strong>这里还没有可选模特</strong><span>可以添加专属模特，或上传一张临时参考图。</span></div>
+      <footer>
+        <div>已选择：<strong id="doubleCommercialPendingModel">未选择</strong></div>
+        <button id="doubleCommercialModelCancel" type="button">取消</button>
+        <button id="doubleCommercialModelConfirm" class="primary" type="button" disabled>确认选择</button>
+      </footer>
+    </div>
+  </dialog>
+  <script src="yishun-web-api.js"></script>
+  <script src="yishun-auth.js"></script>
+  <script src="yishun-models.js"></script>
+  <script src="yishun-model-management.js"></script>
+  <script src="yishun-tryon.js"></script>
+  <script src="yishun-double-commercial.js"></script>
+  <script src="yishun.js"></script>
+</body>
+</html>

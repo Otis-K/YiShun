@@ -1,0 +1,664 @@
+.tryonView {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #f4f5f7;
+}
+
+.tryonView[hidden],
+.tryonResult[hidden],
+.tryonLoading[hidden] {
+  display: none;
+}
+
+.tryonView [hidden] {
+  display: none !important;
+}
+
+.tryonWorkspace {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 382px minmax(0, 1fr);
+}
+
+.tryonControls {
+  min-width: 0;
+  min-height: 0;
+  padding: 22px 24px 18px;
+  overflow-y: auto;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.tryonHeading {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tryonHeading p,
+.tryonStageHeader p {
+  margin: 0 0 5px;
+  color: var(--brand);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.tryonHeading h1 {
+  margin: 0;
+  font-size: 23px;
+  letter-spacing: 0;
+}
+
+.tryonHeading small {
+  display: block;
+  margin-top: 6px;
+  color: #92959c;
+  font-size: 11px;
+}
+
+.tryonBackButton {
+  height: 30px;
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7a7d84;
+  background: transparent;
+  font-size: 11px;
+}
+
+.tryonBackButton:hover {
+  color: var(--ink);
+}
+
+.tryonBackButton svg {
+  width: 15px;
+  height: 15px;
+}
+
+.tryonControlSection {
+  padding: 19px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.tryonControlTitle {
+  min-height: 22px;
+  margin-bottom: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tryonControlTitle h2 {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+.tryonControlTitle span {
+  color: #a0a3aa;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.tryonUploadGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tryonUpload {
+  position: relative;
+  min-width: 0;
+  height: 166px;
+}
+
+.tryonUploadTarget {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 1px dashed #cfd1d6;
+  border-radius: 7px;
+  color: #8d9097;
+  background: #fafafa;
+}
+
+.tryonUploadTarget:hover,
+.tryonUpload.is-dragging .tryonUploadTarget {
+  color: var(--brand);
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.tryonUpload.has-file .tryonUploadTarget {
+  border-style: solid;
+  border-color: #d8dade;
+  background: #f3f4f5;
+}
+
+.tryonUploadEmpty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tryonUploadEmpty svg {
+  width: 29px;
+  height: 29px;
+  margin-bottom: 3px;
+}
+
+.tryonUploadEmpty strong {
+  color: #555860;
+  font-size: 11px;
+}
+
+.tryonUploadEmpty small {
+  font-size: 9px;
+}
+
+.tryonUploadTarget > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.tryonUploadMeta {
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  bottom: 7px;
+  min-width: 0;
+  padding: 6px 8px;
+  overflow: hidden;
+  border-radius: 5px;
+  color: #fff;
+  background: rgba(25, 26, 29, .76);
+  font-size: 9px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  backdrop-filter: blur(5px);
+}
+
+.tryonUploadRemove {
+  position: absolute;
+  z-index: 3;
+  top: 7px;
+  right: 7px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(25, 26, 29, .72);
+}
+
+.tryonUploadRemove:hover {
+  background: #b9323c;
+}
+
+.tryonUploadRemove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tryonSegments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tryonSegments button {
+  min-width: 58px;
+  height: 33px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: #74777e;
+  background: #fff;
+  font-size: 10px;
+}
+
+.tryonSegments button:hover {
+  color: var(--ink);
+  border-color: #c9cbd0;
+  background: #fafafa;
+}
+
+.tryonSegments button.active {
+  color: var(--brand-dark);
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  box-shadow: 0 0 0 2px rgba(255, 90, 99, .08);
+}
+
+.tryonRatioSegments button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.tryonRatioSegments i {
+  display: block;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+
+.tryonRatioSegments i.is-portrait {
+  width: 9px;
+  height: 12px;
+}
+
+.tryonRatioSegments i.is-tall {
+  width: 9px;
+  height: 13px;
+}
+
+.tryonRatioSegments i.is-square {
+  width: 11px;
+  height: 11px;
+}
+
+.tryonControlActions {
+  position: sticky;
+  bottom: -18px;
+  margin-top: auto;
+  padding: 18px 0;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 9px;
+  background: #fff;
+}
+
+.tryonControlActions button {
+  height: 44px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tryonControlActions svg {
+  width: 17px;
+  height: 17px;
+}
+
+.tryonSecondaryButton {
+  padding: 0;
+  border: 1px solid var(--line);
+  color: #73767e;
+  background: #fff;
+}
+
+.tryonSecondaryButton span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.tryonSecondaryButton:hover {
+  color: var(--ink);
+  border-color: #c9cbd0;
+  background: #fafafa;
+}
+
+.tryonGenerateButton {
+  padding: 0 18px;
+  border: 1px solid var(--brand);
+  color: #fff;
+  background: var(--brand);
+  font-weight: 700;
+}
+
+.tryonGenerateButton:hover:not(:disabled) {
+  border-color: var(--brand-dark);
+  background: var(--brand-dark);
+}
+
+.tryonGenerateButton:disabled {
+  cursor: not-allowed;
+  opacity: .42;
+}
+
+.tryonGenerateButton.is-cancel {
+  color: #b9323c;
+  border-color: #efc6ca;
+  background: #fff;
+}
+
+.tryonStage {
+  min-width: 0;
+  min-height: 0;
+  padding: 24px 30px 20px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 16px;
+  background: #f4f5f7;
+}
+
+.tryonStageHeader {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.tryonStageHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.tryonSaveButton {
+  height: 37px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #555860;
+  background: #fff;
+  font-size: 11px;
+}
+
+.tryonSaveButton:hover:not(:disabled) {
+  color: #fff;
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.tryonSaveButton:disabled {
+  cursor: not-allowed;
+  opacity: .42;
+}
+
+.tryonSaveButton svg {
+  width: 16px;
+  height: 16px;
+}
+
+.tryonResultSurface {
+  position: relative;
+  min-width: 0;
+  min-height: 390px;
+  overflow: hidden;
+  border: 1px solid #dfe1e5;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+}
+
+.tryonEmptyResult {
+  padding: 30px;
+  color: #989ba2;
+  text-align: center;
+}
+
+.tryonEmptyResult h2 {
+  margin: 20px 0 6px;
+  color: #36383e;
+  font-size: 17px;
+  letter-spacing: 0;
+}
+
+.tryonEmptyResult p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.tryonFormula {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+}
+
+.tryonFormula span {
+  width: 66px;
+  height: 76px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  color: #8c8f96;
+  background: #fafafa;
+}
+
+.tryonFormula span.is-result {
+  color: #fff;
+  border-color: var(--brand);
+  background: var(--brand);
+}
+
+.tryonFormula svg {
+  width: 28px;
+  height: 28px;
+}
+
+.tryonFormula b {
+  color: #b6b8bd;
+  font-size: 18px;
+}
+
+.tryonResult {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 18px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-items: center;
+}
+
+.tryonResult img {
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.tryonResult figcaption {
+  padding-top: 10px;
+  color: #95989f;
+  font-size: 10px;
+}
+
+.tryonLoading {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(255, 255, 255, .94);
+}
+
+.tryonSpinner {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 15px;
+  border: 3px solid #f1c5c8;
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: tryon-spin .8s linear infinite;
+}
+
+.tryonLoading strong {
+  font-size: 12px;
+}
+
+.tryonLoading small {
+  margin-top: 7px;
+  color: #9a9da4;
+  font-size: 9px;
+}
+
+.tryonProgressTrack {
+  width: min(280px, 70%);
+  height: 4px;
+  margin-top: 16px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #eceef0;
+}
+
+.tryonProgressTrack i {
+  width: 0;
+  height: 100%;
+  display: block;
+  background: var(--brand);
+  transition: width .25s ease;
+}
+
+@keyframes tryon-spin {
+  to { transform: rotate(360deg); }
+}
+
+.tryonStageFooter {
+  min-width: 0;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tryonSourceThumb {
+  position: relative;
+  width: 54px;
+  height: 62px;
+  overflow: hidden;
+  border: 1px solid #dfe1e5;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.tryonSourceThumb > span {
+  position: absolute;
+  z-index: 2;
+  left: 4px;
+  top: 4px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: #fff;
+  background: rgba(32, 33, 38, .7);
+  font-size: 8px;
+}
+
+.tryonSourceThumb img,
+.tryonSourceThumb > i {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.tryonSourceThumb > i {
+  display: grid;
+  place-items: center;
+  color: #a3a6ad;
+}
+
+.tryonSourceThumb svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tryonSourceConnector {
+  width: 48px;
+  display: flex;
+  align-items: center;
+  color: #a8abb1;
+}
+
+.tryonSourceConnector span {
+  height: 1px;
+  flex: 1;
+  background: #d9dbe0;
+}
+
+.tryonSourceConnector svg {
+  width: 15px;
+  height: 15px;
+}
+
+.tryonResultStatus {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8d9097;
+  font-size: 10px;
+}
+
+.tryonResultStatus i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b9bcc2;
+}
+
+.tryonResultStatus.is-ready i {
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgba(31, 163, 107, .1);
+}
+
+.tryonResultStatus.is-running i {
+  background: #e7a62e;
+  box-shadow: 0 0 0 4px rgba(231, 166, 46, .1);
+}
+
+.tryonResultStatus.is-error i {
+  background: #c53a45;
+  box-shadow: 0 0 0 4px rgba(197, 58, 69, .1);
+}
+
+@media (max-width: 1080px) {
+  .tryonWorkspace { grid-template-columns: 330px minmax(0, 1fr); }
+  .tryonControls { padding-left: 18px; padding-right: 18px; }
+  .tryonStage { padding-left: 20px; padding-right: 20px; }
+  .tryonUpload { height: 148px; }
+}
+
+@media (max-width: 760px) {
+  .workspace,
+  .canvasImmersiveMode .workspace { grid-template-columns: minmax(0, 1fr); }
+  .tryonView { overflow-y: auto; }
+  .tryonWorkspace { height: auto; min-height: 100%; grid-template-columns: 1fr; }
+  .tryonControls { overflow: visible; border-right: 0; border-bottom: 1px solid var(--line); }
+  .tryonControlActions { bottom: 0; }
+  .tryonStage { min-height: 620px; padding: 20px 14px; }
+  .tryonResultSurface { min-height: 440px; }
+  .tryonStageFooter { flex-wrap: wrap; }
+  .tryonResultStatus { width: 100%; margin: 4px 0 0; }
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "demo-flow",
+  "name": "FlowCanvas Backend SDK Demo",
+  "nodes": [
+    {
+      "id": "text-1",
+      "type": "prompt",
+      "position": { "x": 80, "y": 80 },
+      "data": {
+        "title": "故事",
+        "prompt": "霓虹雨夜里的追逐故事"
+      }
+    },
+    {
+      "id": "image-1",
+      "type": "image",
+      "position": { "x": 420, "y": 80 },
+      "data": {
+        "title": "画面",
+        "prompt": "霓虹雨夜，电影感"
+      }
+    },
+    {
+      "id": "video-1",
+      "type": "video",
+      "position": { "x": 760, "y": 80 },
+      "data": {
+        "title": "镜头",
+        "prompt": "镜头推进",
+        "duration": 5
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-text-image",
+      "source": "text-1",
+      "sourcePort": "text",
+      "target": "image-1",
+      "targetPort": "prompt"
+    },
+    {
+      "id": "edge-image-video",
+      "source": "image-1",
+      "sourcePort": "image",
+      "target": "video-1",
+      "targetPort": "image"
+    },
+    {
+      "id": "edge-text-video",
+      "source": "text-1",
+      "sourcePort": "text",
+      "target": "video-1",
+      "targetPort": "prompt"
+    }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 1 },
+  "metadata": {
+    "source": "flowcanvas-backend-sdk"
+  }
+}

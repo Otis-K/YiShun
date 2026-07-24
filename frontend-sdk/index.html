@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>FlowCanvas SDK</title>
+    <style>html,body,#root{width:100%;height:100%;margin:0;overflow:hidden}</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <button id="model-config-open" class="demo-model-config-button" type="button">
+      <span class="demo-model-config-button__dot" aria-hidden="true"></span>
+      <span>模型设置</span>
+    </button>
+    <dialog id="model-config-dialog" class="demo-model-dialog">
+      <form id="model-config-form" method="dialog">
+        <header>
+          <div><strong>图片模型设置</strong><span>Nano Banana Pro</span></div>
+          <button id="model-config-close" type="button" aria-label="关闭">×</button>
+        </header>
+        <label>
+          <span>API 地址</span>
+          <input id="model-base-url" name="baseURL" type="url" value="https://api.tmlab.store" required />
+        </label>
+        <label>
+          <span>图片 API Key</span>
+          <input id="image-api-key" name="imageApiKey" type="password" autocomplete="off" placeholder="输入图片生成 API Key" />
+        </label>
+        <label>
+          <span>视频 API Key</span>
+          <input id="video-api-key" name="videoApiKey" type="password" autocomplete="off" placeholder="输入视频生成 API Key" />
+        </label>
+        <p id="model-config-message" role="status"></p>
+        <footer>
+          <button id="model-config-cancel" type="button">取消</button>
+          <button class="is-primary" type="submit">保存设置</button>
+        </footer>
+      </form>
+    </dialog>
+    <script type="module" src="/demo/main.tsx"></script>
+  </body>
+</html>

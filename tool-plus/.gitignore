@@ -1,0 +1,13 @@
+node_modules/
+.venv/
+.tools/
+release/
+build/
+dist/
+bin/
+work/
+安装包测试/
+.env
+.env.local
+.env.*.local
+!.env.example

@@ -1,0 +1,122 @@
+{
+  "name": "tool-plus",
+  "version": "0.5.30",
+  "description": "衣瞬 AI 服装视觉创作工作台",
+  "main": "electron/main.js",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "web": "powershell -ExecutionPolicy Bypass -File scripts/start-web.ps1",
+    "web:serve": "node web/server.js",
+    "build:web-backend": "powershell -ExecutionPolicy Bypass -File scripts/build-web-backend.ps1",
+    "dev": "electron .",
+    "build:pdf-helper": "powershell -ExecutionPolicy Bypass -File scripts/build-pdf-page-numbers-helper.ps1",
+    "build:bridge": "powershell -ExecutionPolicy Bypass -File scripts/build-python-bridge.ps1",
+    "build:backend": "powershell -ExecutionPolicy Bypass -File scripts/build-backend.ps1",
+    "verify:source": "powershell -ExecutionPolicy Bypass -File scripts/verify.ps1",
+    "verify:local-canvas-shell": "node scripts/verify-local-canvas-shell.js",
+    "verify:yishun-ui": "electron scripts/verify-yishun-ui.js",
+    "verify:double-commercial": "electron scripts/verify-double-commercial.js",
+    "verify:double-commercial-ui": "electron scripts/verify-double-commercial-ui.js",
+    "verify:yishun-web": "node scripts/verify-yishun-web.cjs",
+    "verify:yishun-auth": "node scripts/verify-yishun-auth.cjs",
+    "verify:yishun-auth-ui": "electron scripts/verify-yishun-auth-ui.js",
+    "verify:local-env": "node scripts/verify-local-env.cjs",
+    "verify:yishun-web-ui": "electron scripts/verify-yishun-web-ui.js",
+    "verify:immersive-ui": "node scripts/verify-immersive-ui.js",
+    "verify:outer-canvas-immersive": "electron scripts/verify-outer-canvas-immersive-ui.js",
+    "verify:toolplus-native-canvas": "electron scripts/verify-toolplus-native-canvas-ui.js",
+    "verify:canvas-prompt-input": "node scripts/verify-canvas-prompt-input.cjs",
+    "verify:model-profiles": "node scripts/verify-model-profile-management.cjs",
+    "verify:model-auth": "node scripts/verify-model-authentication.cjs",
+    "verify:model-management": "node scripts/verify-model-management-crud.cjs",
+    "verify:model-management-ui": "electron scripts/verify-model-management-ui.js",
+    "verify:model-queue": "node scripts/verify-model-task-queue.cjs",
+    "verify:real-image": "node scripts/verify-real-image-chain.cjs",
+    "verify:blue-workbench": "electron verify/workbench-workflow-ui.test.js",
+    "verify:workflow-integration": "electron scripts/verify-workflow-integration.js",
+    "verify:data-root": "node scripts/verify-data-root.cjs",
+    "verify:release-source": "npm run verify:source && npm run verify:data-root && npm run verify:local-canvas-shell && npm run verify:immersive-ui && npm run verify:outer-canvas-immersive && npm run verify:toolplus-native-canvas && npm run verify:canvas-prompt-input && npm run verify:model-profiles && npm run verify:model-auth && npm run verify:model-management && npm run verify:model-queue && npm run verify:yishun-auth && npm run verify:blue-workbench && npm run verify:workflow-integration",
+    "verify:packaged": "node scripts/verify-packaged-immersive-ui.js",
+    "dist": "npm run build:pdf-helper && npm run build:bridge && npm run build:backend && npm run verify:release-source && electron-builder --win nsis && npm run verify:packaged",
+    "pack": "npm run build:pdf-helper && npm run build:bridge && npm run build:backend && npm run verify:release-source && electron-builder --dir && npm run verify:packaged"
+  },
+  "devDependencies": {
+    "electron": "39.8.10",
+    "electron-builder": "26.11.1"
+  },
+  "build": {
+    "appId": "com.toolplus.batch",
+    "productName": "衣瞬",
+    "asar": true,
+    "compression": "maximum",
+    "electronDist": "node_modules/electron/dist",
+    "electronLanguages": [
+      "zh-CN",
+      "en-US"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "!electron/canvas-preload.js",
+      "frontend/**/*",
+      "python_bridge/**/*",
+      "THIRD_PARTY_NOTICES.md",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "bin/toolplus-backend.exe",
+        "to": "bin/toolplus-backend.exe"
+      },
+      {
+        "from": "bin/flowcanvas-backend.exe",
+        "to": "bin/flowcanvas-backend.exe"
+      },
+      {
+        "from": "bin/toolplus-engine.exe",
+        "to": "bin/toolplus-engine.exe"
+      },
+      {
+        "from": "bin/python-bridge.exe",
+        "to": "bin/python-bridge.exe"
+      },
+      {
+        "from": "bin/pdf-page-numbers-helper.exe",
+        "to": "bin/pdf-page-numbers-helper.exe"
+      },
+      {
+        "from": "tools/pdfcpu.exe",
+        "to": "tools/pdfcpu.exe"
+      },
+      {
+        "from": "tools/yt-dlp.exe",
+        "to": "tools/yt-dlp.exe"
+      },
+      {
+        "from": "tools/ffmpeg",
+        "to": "tools/ffmpeg"
+      },
+      {
+        "from": "tools/exiftool",
+        "to": "tools/exiftool"
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "include": "build/installer.nsh",
+      "oneClick": true,
+      "runAfterFinish": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

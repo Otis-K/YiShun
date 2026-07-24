@@ -1,0 +1,11 @@
+.idea/
+.vscode/
+bin/
+dist/
+coverage/
+*.exe
+*.test
+*.out
+*.log
+tmp/
+temp/

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "approvedBy": "project owner in Codex task",
+  "approvedAt": "2026-07-14T23:00:00+08:00",
+  "waivedLevels": [
+    "L4",
+    "L5"
+  ],
+  "waivedGates": [
+    "usability"
+  ],
+  "reason": "项目负责人明确要求本轮不执行 L4 破坏测试、L5 长稳/启停测试和 5 名真人首次用户测试。豁免项不得显示为 PASS。"
+}

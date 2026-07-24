@@ -1,0 +1,52 @@
+.demo-model-config-button {
+  position: fixed;
+  z-index: 40;
+  top: 14px;
+  right: 16px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 6px;
+  background: rgba(23, 27, 36, .92);
+  color: #f6f7fb;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 13px/1 system-ui, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .22);
+}
+
+.demo-model-config-button:hover { background: rgba(38, 44, 57, .96); }
+.demo-model-config-button__dot { width: 8px; height: 8px; border-radius: 50%; background: #e05d67; }
+.demo-model-config-button.is-configured .demo-model-config-button__dot { background: #58c98b; }
+
+.demo-model-dialog {
+  width: min(430px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid #343b49;
+  border-radius: 8px;
+  background: #171b24;
+  color: #f4f6fa;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .48);
+}
+
+.demo-model-dialog::backdrop { background: rgba(5, 8, 13, .72); }
+.demo-model-dialog form { display: grid; gap: 18px; padding: 20px; }
+.demo-model-dialog header, .demo-model-dialog footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.demo-model-dialog header div { display: grid; gap: 5px; }
+.demo-model-dialog header strong { font: 600 17px/1.2 system-ui, sans-serif; }
+.demo-model-dialog header span, .demo-model-dialog label span { color: #99a3b5; font: 12px/1.3 system-ui, sans-serif; }
+.demo-model-dialog header button { width: 30px; height: 30px; padding: 0; border: 0; background: transparent; color: #aeb6c5; font-size: 22px; cursor: pointer; }
+.demo-model-dialog label { display: grid; gap: 7px; }
+.demo-model-dialog input { height: 38px; box-sizing: border-box; border: 1px solid #3b4352; border-radius: 5px; outline: 0; padding: 0 10px; background: #10141c; color: #f4f6fa; font: 13px/1 system-ui, sans-serif; }
+.demo-model-dialog input:focus { border-color: #6e9df8; box-shadow: 0 0 0 2px rgba(110, 157, 248, .2); }
+.demo-model-dialog p { min-height: 17px; margin: 0; color: #e4777e; font: 12px/1.4 system-ui, sans-serif; }
+.demo-model-dialog footer { justify-content: flex-end; }
+.demo-model-dialog footer button { min-width: 72px; height: 34px; border: 1px solid #3b4352; border-radius: 5px; background: #222936; color: #e7eaf0; cursor: pointer; }
+.demo-model-dialog footer button.is-primary { border-color: #5f8ce4; background: #5f8ce4; color: #fff; }
+
+@media (prefers-color-scheme: light) {
+  .demo-model-config-button { border-color: #c8ced8; background: rgba(255, 255, 255, .94); color: #202530; }
+  .demo-model-config-button:hover { background: #fff; }
+}
