@@ -2,6 +2,10 @@
 
 衣瞬是一款面向服装设计、电商运营和视觉创作者的 AI 服装视觉创作工具。它将图片生成、视频生成、虚拟试衣、模特管理和智能工作流整合到一个本地桌面应用中，帮助用户快速完成服装展示图、模特效果图及商品宣传素材的制作。
 
+<img width="2636" height="1794" alt="image" src="https://github.com/user-attachments/assets/25c0f092-1b54-4ca5-8da2-e67ba222c932" />
+<img width="2630" height="1788" alt="image" src="https://github.com/user-attachments/assets/500d6fd9-63db-4ce0-b485-e633871f093d" />
+<img width="2642" height="1810" alt="image" src="https://github.com/user-attachments/assets/c587653b-6809-4c5a-849f-ae8dc482e9e7" />
+
 该仓库包含 TinyTool / Tool Plus 的三个独立部分：
 
 - `frontend-sdk/`：FlowCanvas 前端画布 SDK。
